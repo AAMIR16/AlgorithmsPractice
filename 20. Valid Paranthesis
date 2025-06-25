@@ -1,0 +1,33 @@
+public class Solution {
+    public bool IsValid(string s) {
+
+        Stack<char> stack = new Stack<char>(); // Last in First Out
+
+        foreach(var c in s)
+        {
+            if(c == '{' || c == '[' || c == '(') // Check for each character if in stack with opening brackets
+            {
+                stack.Push(c);  // Insert into stack
+            }
+            else
+            {
+                if(stack.Count == 0) 
+                    return false;
+
+                var top = stack.Pop();  // pop the first item 
+
+                if(c == '}' && top != '{' ||       // verify if the char is opening then the top of the stack is the closed bracket
+                   c == ']' && top != '[' ||
+                   c == ')' && top != '(')
+                   {
+                    return false;
+                   }
+
+            }
+        }
+        return stack.Count == 0;  // if stack is not empty and has some values due to brackets mismatch, this will return false
+    }
+}
+
+// Time complexity = O(n) as we loop through the string only once
+// Space complexity = O(n) as we take into stack the brackets each at a time. 
