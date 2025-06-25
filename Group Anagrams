@@ -1,0 +1,45 @@
+public class Solution {
+    public IList<IList<string>> GroupAnagrams(string[] strs) 
+    {
+        /*
+            Get the ascii of the word
+            Add it to a dictionary
+            return the values of dictionary
+        */
+        
+        if(strs.Length == 0 || strs == null)
+            return new List<IList<string>>();
+        
+        var result = new List<IList<string>>();
+        var dict = new Dictionary<string, List<string>>();
+        
+        foreach(var item in strs)
+        {
+            var asciiStr = GetAscii(item);
+            
+            if(!dict.ContainsKey(asciiStr))
+                dict.Add(asciiStr, new List<string>());
+            
+            dict[asciiStr].Add(item);
+        }
+        
+        foreach(var item in dict)
+        {
+            result.Add(item.Value);
+        }
+        return result;
+    }
+    
+    static string GetAscii(string word)
+    {
+        var ascii = new int[26];
+        
+        for(int i=0; i< word.Length; i++)
+        {
+            var index = word[i] - 'a';
+            ascii[index]++;
+        }
+        var str = string.Join("#",ascii);
+        return str;
+    }
+}
